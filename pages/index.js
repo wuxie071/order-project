@@ -1,212 +1,216 @@
-import { useState } from "react";
+import React, { useState } from 'react';
 import Head from 'next/head';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronLeft, MoreHorizontal, CircleDot, Search, SlidersHorizontal, RefreshCw, Copy } from 'lucide-react';
 
-export default function DesignSystem() {
-  return (
-    <div className="bg-[#F0F2F5] min-h-screen p-10 font-sans text-[#333]">
-      <Head>
-        <script src="https://cdn.tailwindcss.com"></script>
-        <title>定制订单系统设计 1.0</title>
-      </Head>
-
-      {/* 整体容器：平铺展示四个页面 */}
-      <div className="flex gap-8 overflow-x-auto pb-10">
-        
-        {/* 01 订单列表页 */}
-        <PhoneShell title="01 订单列表页">
-          <div className="bg-white sticky top-0 px-4 py-3 border-b flex justify-between items-center">
-            <span className="text-gray-400 text-lg">〈</span>
-            <h1 className="font-bold">定制订单</h1>
-            <div className="flex gap-2">
-              <span className="w-5 h-5 bg-gray-100 rounded-full flex items-center justify-center text-[10px]">...</span>
-              <span className="w-5 h-5 bg-gray-100 rounded-full flex items-center justify-center text-[10px]">○</span>
-            </div>
-          </div>
-          <div className="p-3 bg-[#F6F7F9] h-full">
-            <div className="bg-white p-2 rounded flex items-center gap-2 mb-3 shadow-sm">
-              <span className="text-gray-300">🔍</span>
-              <input className="text-xs bg-transparent outline-none w-full" placeholder="搜索订单编号/产品名称" />
-              <span className="text-blue-500 text-xs">搜索</span>
-            </div>
-            <div className="flex justify-between text-xs text-gray-500 mb-3 px-1">
-              <span className="text-blue-600 font-bold border-b-2 border-blue-600 pb-1">全部</span>
-              <span>待确认</span>
-              <span>已支付</span>
-              <span>已发货</span>
-              <span>已完成</span>
-            </div>
-            {/* 订单卡片 */}
-            <div className="bg-white p-4 rounded-xl shadow-sm mb-3">
-              <div className="flex justify-between items-start mb-2">
-                <div className="flex gap-2 items-center">
-                  <span className="bg-orange-50 text-orange-500 text-[10px] px-1.5 py-0.5 rounded">待确认</span>
-                  <span className="text-orange-300 text-[10px]">待确认，请尽快支付</span>
-                </div>
-                <span className="text-[#FABC16] font-bold">¥25,600.00</span>
-              </div>
-              <h3 className="font-bold text-sm">夏凉被四件套</h3>
-              <p className="text-[10px] text-gray-400 mt-1">DD20260510001  |  05-10  |  200套</p>
-              <div className="flex justify-end mt-3">
-                <button className="bg-[#1677FF] text-white text-[10px] px-4 py-1 rounded-full">去支付</button>
-              </div>
-            </div>
-          </div>
-        </PhoneShell>
-
-        {/* 02 订单详情页 */}
-        <PhoneShell title="02 订单详情页">
-          <div className="bg-white px-4 py-3 border-b flex justify-between items-center">
-            <span className="text-gray-400 text-lg">〈</span>
-            <h1 className="font-bold">订单详情</h1>
-            <span className="w-5 h-5 bg-gray-100 rounded-full"></span>
-          </div>
-          <div className="bg-orange-50 px-4 py-3 flex items-center gap-3">
-            <div className="w-10 h-10 bg-[#FABC16] rounded-full flex items-center justify-center text-white text-xl">🕒</div>
-            <div>
-              <p className="text-orange-600 font-bold text-sm">待确认</p>
-              <p className="text-orange-400 text-[10px]">请确认订单并完成支付</p>
-            </div>
-          </div>
-          <div className="p-4 space-y-5 overflow-y-auto h-[450px]">
-            <Section title="基本信息" lines={[["客户编号","ZD2026001"],["客户名称","杭州总代"],["直发方式","到门店"]]} />
-            <Section title="产品信息" lines={[["料号","SP202605001"],["品名","夏凉被四件套"],["规格","200x230cm"],["数量","200套"]]} />
-            <Section title="价格信息" lines={[["定制价格","¥128.00/套"],["吊牌价格","¥298.00/套"]]} />
-            <div className="pt-2 border-t">
-               <p className="text-[#FABC16] text-[10px] font-bold mb-1">⚒ 工艺描述 (请仔细核对)</p>
-               <div className="bg-orange-50/50 p-2 rounded text-[10px] text-orange-800 leading-relaxed">
-                 面料：100%新疆长绒棉；填充：60%大豆纤维+40%聚酯纤维；工艺：水洗工艺、磨毛处理
-               </div>
-            </div>
-          </div>
-          <div className="absolute bottom-0 w-full p-3 bg-white border-t flex justify-between items-center">
-            <span className="text-xs font-bold">合计：¥25,600.00</span>
-            <button className="bg-[#1677FF] text-white text-xs px-6 py-2 rounded-lg font-bold">确认并支付</button>
-          </div>
-        </PhoneShell>
-
-        {/* 03 订单进度页 */}
-        <PhoneShell title="03 订单进度页">
-          <div className="bg-white px-4 py-3 border-b flex justify-between items-center">
-            <span className="text-gray-400 text-lg">〈</span>
-            <h1 className="font-bold text-sm text-center flex-1">订单进度</h1>
-          </div>
-          <div className="p-4 bg-[#F6F7F9] h-full space-y-4 overflow-y-auto h-[550px]">
-             <div className="bg-white p-4 rounded-xl flex items-center gap-3">
-                <div className="bg-purple-100 p-3 rounded-xl text-xl">🚚</div>
-                <div>
-                   <p className="text-purple-600 font-bold text-sm">已发货</p>
-                   <p className="text-purple-300 text-[10px]">物流派送中，预计3天内送达</p>
-                </div>
-             </div>
-             <div className="bg-white p-4 rounded-xl">
-                <p className="font-bold text-xs mb-4">订单进度</p>
-                <div className="space-y-4">
-                  <TimelineStep status="done" title="客户已支付" time="2026-05-10 14:30" />
-                  <TimelineStep status="done" title="生产中" time="2026-05-11 09:20" />
-                  <TimelineStep status="active" title="已发货" time="2026-05-15 10:30" />
-                  <TimelineStep status="todo" title="待收货" time="预计 2026-05-18 前送达" last />
-                </div>
-             </div>
-             <div className="bg-white p-4 rounded-xl">
-                <p className="font-bold text-xs mb-3">物流信息</p>
-                <div className="flex justify-between text-[10px] text-gray-500"><span className="text-gray-300">快递公司</span><span>顺丰速运</span></div>
-                <div className="flex justify-between text-[10px] text-gray-500 mt-2"><span className="text-gray-300">快递单号</span><span>SF123456789012</span></div>
-             </div>
-          </div>
-          <div className="absolute bottom-0 w-full p-4 bg-white border-t">
-             <button className="w-full bg-[#722ED1] text-white py-3 rounded-xl font-bold text-sm">确认收货</button>
-          </div>
-        </PhoneShell>
-
-        {/* 04 确认支付页 */}
-        <PhoneShell title="04 确认支付页">
-          <div className="bg-white px-4 py-3 border-b flex justify-between items-center">
-            <span className="text-gray-400 text-lg">〈</span>
-            <h1 className="font-bold">确认支付</h1>
-          </div>
-          <div className="p-4 bg-[#F6F7F9] h-full">
-             <div className="bg-white p-3 rounded-xl mb-4">
-                <p className="text-[10px] font-bold mb-3">订单信息</p>
-                <div className="flex gap-3">
-                  <div className="w-14 h-14 bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center text-[8px] text-gray-400">产品图片</div>
-                  <div>
-                    <p className="font-bold text-xs">夏凉被四件套</p>
-                    <p className="text-[10px] text-gray-400 mt-1">SP202605001</p>
-                    <p className="text-[10px] text-gray-400">200x230cm 喜</p>
-                  </div>
-                </div>
-             </div>
-             <div className="bg-white p-3 rounded-xl mb-4">
-                <p className="text-[10px] font-bold mb-3">费用明细</p>
-                <div className="flex justify-between text-[10px] text-gray-400 mb-2"><span>定制费用</span><span className="text-gray-800 font-medium">¥25,600.00</span></div>
-                <div className="flex justify-between text-[10px] text-gray-400 mb-2"><span>快递费</span><span className="text-gray-800 font-medium">¥0.00</span></div>
-                <div className="flex justify-between items-center pt-2 border-t mt-1">
-                   <span className="text-xs font-bold">应付合计</span>
-                   <span className="text-orange-500 font-bold text-sm">¥25,600.00</span>
-                </div>
-             </div>
-             <div className="bg-white p-3 rounded-xl mb-4">
-                <p className="text-[10px] font-bold mb-3">收货地址</p>
-                <div className="flex gap-2">
-                   <span className="text-gray-300">📍</span>
-                   <p className="text-[10px] leading-relaxed text-gray-500">浙江省杭州市西湖区文三路XXX号 XX旗舰店 (张三 138****8888)</p>
-                </div>
-             </div>
-          </div>
-          <div className="absolute bottom-0 w-full p-3 bg-white border-t flex justify-between items-center">
-             <div className="text-[10px]"><span className="text-gray-400">实付：</span><span className="text-orange-500 font-bold text-lg">¥25,600.00</span></div>
-             <button className="bg-[#1677FF] text-white text-xs px-8 py-2.5 rounded-lg font-bold">立即支付</button>
-          </div>
-        </PhoneShell>
-
+// --- 子组件：订单列表页 ---
+const OrderList = ({ onDetail }) => (
+  <div className="bg-[#F5F7FA] min-h-screen pb-20">
+    <div className="bg-white p-4 sticky top-0 z-10">
+      <div className="flex items-center justify-between mb-4">
+        <ChevronLeft size={24} />
+        <h1 className="text-lg font-bold">定制订单</h1>
+        <div className="flex gap-2">
+          <MoreHorizontal size={20} />
+          <CircleDot size={20} />
+        </div>
+      </div>
+      <div className="relative mb-4">
+        <Search className="absolute left-3 top-2.5 text-gray-400" size={18} />
+        <input className="w-full bg-gray-100 rounded-full py-2 pl-10 pr-4 text-sm" placeholder="搜索订单编号 / 产品名称" />
+      </div>
+      <div className="flex justify-between text-sm text-gray-500 px-2">
+        <span className="text-primary font-bold border-b-2 border-primary pb-1">全部</span>
+        <span className="relative">待确认 <span className="absolute -top-2 -right-3 bg-error text-white text-[10px] px-1 rounded-full">3</span></span>
+        <span>已支付</span>
+        <span>已发货</span>
+        <span>已完成</span>
       </div>
     </div>
-  );
-}
 
-// 手机壳包装组件
-function PhoneShell({ children, title }) {
-  return (
-    <div className="flex-shrink-0 w-[320px]">
-      <p className="text-[#1677FF] font-bold mb-4">{title}</p>
-      <div className="w-[320px] h-[640px] bg-white rounded-[40px] border-[8px] border-[#333] shadow-2xl relative overflow-hidden flex flex-col">
-         {/* 顶部听筒 */}
-         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-[#333] rounded-b-2xl z-20"></div>
-         {children}
-      </div>
+    <div className="p-4 space-y-4">
+      {[
+        { title: '夏凉被四件套', id: 'DD20260510001', price: '25,600.00', status: '待确认', time: '05-10', count: '200套', color: 'text-warning' },
+        { title: '空调被', id: 'DD20260508001', price: '18,000.00', status: '已支付, 生产中', time: '05-08', count: '150套', color: 'text-primary' },
+      ].map((order, i) => (
+        <div key={i} className="bg-white rounded-xl p-4 shadow-sm" onClick={onDetail}>
+          <div className="flex justify-between items-start mb-2">
+            <div className="flex items-center gap-2">
+              <span className={`bg-orange-50 ${order.color} text-[10px] px-2 py-0.5 rounded`}>{order.status.split(',')[0]}</span>
+              <span className="text-warning text-xs">● 待确认, 请尽快支付</span>
+            </div>
+            <span className="text-lg font-bold text-warning">¥{order.price}</span>
+          </div>
+          <h3 className="font-bold mb-1">{order.title}</h3>
+          <div className="text-gray-400 text-xs flex justify-between">
+            <span>{order.id}  |  {order.time}  |  {order.count}</span>
+            <button className="bg-primary text-white px-4 py-1.5 rounded-full text-xs">去支付</button>
+          </div>
+        </div>
+      ))}
     </div>
-  );
-}
+  </div>
+);
 
-// 通用信息行
-function Section({ title, lines }) {
-  return (
-    <div>
-       <p className="text-[10px] font-bold text-gray-800 mb-3 border-l-2 border-blue-500 pl-2">{title}</p>
-       <div className="space-y-2 px-1">
-          {lines.map(([label, val], i) => (
-            <div key={i} className="flex justify-between text-[10px]">
-              <span className="text-gray-300">{label}</span>
-              <span className="text-gray-600 font-medium">{val}</span>
+// --- 子组件：订单详情页 ---
+const OrderDetail = ({ onNext, onBack }) => (
+  <div className="bg-[#F5F7FA] min-h-screen pb-24">
+    <div className="bg-white p-4 flex items-center justify-between sticky top-0">
+      <ChevronLeft size={24} onClick={onBack} />
+      <h1 className="text-lg font-bold">订单详情</h1>
+      <MoreHorizontal size={24} />
+    </div>
+    
+    <div className="bg-orange-50 p-4 m-4 rounded-xl">
+      <div className="flex items-center gap-2 text-warning font-bold">
+        <div className="w-5 h-5 bg-warning rounded-full flex items-center justify-center text-white text-[10px]">!</div>
+        待确认
+      </div>
+      <p className="text-warning text-xs mt-1">请确认订单并完成支付</p>
+    </div>
+
+    <section className="bg-white m-4 p-4 rounded-xl space-y-3">
+      <h2 className="font-bold border-l-4 border-primary pl-2 text-sm">基本信息</h2>
+      <div className="grid grid-cols-2 text-xs gap-y-2">
+        <span className="text-gray-400">客户编号</span><span className="text-right">ZD2026001</span>
+        <span className="text-gray-400">客户名称</span><span className="text-right">杭州总代</span>
+        <span className="text-gray-400">直发方式</span><span className="text-right">到门店</span>
+      </div>
+    </section>
+
+    <section className="bg-white m-4 p-4 rounded-xl space-y-3">
+      <h2 className="font-bold border-l-4 border-primary pl-2 text-sm">产品信息</h2>
+      <div className="grid grid-cols-2 text-xs gap-y-2">
+        <span className="text-gray-400">料号</span><span className="text-right">SP202605001</span>
+        <span className="text-gray-400">品名</span><span className="text-right font-bold">夏凉被四件套</span>
+        <span className="text-gray-400">规格</span><span className="text-right">200x230cm</span>
+        <span className="text-gray-400">数量</span><span className="text-right text-warning font-bold">200</span>
+      </div>
+    </section>
+
+    <div className="fixed bottom-0 w-full bg-white p-4 flex justify-between items-center border-t">
+      <span className="text-warning font-bold">合计: ¥25,600.00</span>
+      <button className="bg-primary text-white px-8 py-2 rounded-lg font-bold" onClick={onNext}>确认并支付</button>
+    </div>
+  </div>
+);
+
+// --- 子组件：确认支付页 ---
+const PaymentPage = ({ onNext, onBack }) => (
+  <div className="bg-[#F5F7FA] min-h-screen">
+    <div className="bg-white p-4 flex items-center justify-between">
+      <ChevronLeft size={24} onClick={onBack} />
+      <h1 className="text-lg font-bold">确认支付</h1>
+      <MoreHorizontal size={24} />
+    </div>
+
+    <div className="p-4 space-y-4">
+      <div className="bg-white p-4 rounded-xl flex gap-4">
+        <div className="w-20 h-20 bg-gray-100 rounded-lg"></div>
+        <div>
+          <h3 className="font-bold">夏凉被四件套</h3>
+          <p className="text-gray-400 text-xs mt-1">SP202605001</p>
+          <p className="text-gray-400 text-xs">200x230cm  套</p>
+          <div className="flex justify-between mt-2">
+            <span className="text-xs">数量 200套</span>
+            <span className="text-xs">单价 ¥128.00/套</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-white p-4 rounded-xl space-y-3 text-sm">
+        <div className="flex justify-between"><span>定制费用</span><span>¥25,600.00</span></div>
+        <div className="flex justify-between"><span>快递费</span><span>¥0.00</span></div>
+        <div className="flex justify-between font-bold border-t pt-3">
+          <span>应付合计</span><span className="text-warning text-lg">¥25,600.00</span>
+        </div>
+      </div>
+      
+      <button className="w-full bg-primary text-white py-3 rounded-xl font-bold mt-8" onClick={onNext}>立即支付</button>
+    </div>
+  </div>
+);
+
+// --- 子组件：订单进度页 ---
+const ProgressPage = ({ onBack }) => (
+  <div className="bg-[#F5F7FA] min-h-screen">
+    <div className="bg-white p-4 flex items-center justify-between">
+      <ChevronLeft size={24} onClick={onBack} />
+      <h1 className="text-lg font-bold">订单进度</h1>
+      <MoreHorizontal size={24} />
+    </div>
+
+    <div className="p-4 space-y-4">
+      <div className="bg-purple-50 p-4 rounded-xl flex items-center gap-4">
+        <div className="bg-purple-500 p-2 rounded-lg text-white">🚚</div>
+        <div>
+          <h3 className="text-purple-600 font-bold">已发货</h3>
+          <p className="text-purple-400 text-xs">物流配送中, 预计3天内送达</p>
+        </div>
+      </div>
+
+      <div className="bg-white p-6 rounded-xl relative">
+        <div className="space-y-8 relative">
+          <div className="absolute left-[11px] top-2 bottom-2 w-[2px] bg-gray-100"></div>
+          {[
+            { status: '客户已支付', time: '2026-05-10 14:30', active: true },
+            { status: '生产中', time: '2026-05-11 09:20', active: true },
+            { status: '已发货', time: '2026-05-15 10:30', active: true },
+            { status: '待收货', time: '预计 2026-05-18 前送达', active: false },
+          ].map((step, i) => (
+            <div key={i} className="flex gap-4 items-start relative z-10">
+              <div className={`w-6 h-6 rounded-full border-4 border-white shadow-sm flex items-center justify-center ${step.active ? 'bg-success' : 'bg-gray-200'}`}>
+                {step.active && <span className="text-white text-[10px]">✓</span>}
+              </div>
+              <div>
+                <p className={`text-sm font-bold ${step.active ? 'text-black' : 'text-gray-300'}`}>{step.status}</p>
+                <p className="text-xs text-gray-400 mt-1">{step.time}</p>
+              </div>
             </div>
           ))}
-       </div>
+        </div>
+      </div>
+      
+      <button className="w-full bg-primary text-white py-3 rounded-xl font-bold">确认收货</button>
     </div>
-  );
-}
+  </div>
+);
 
-// 进度条组件
-function TimelineStep({ status, title, time, last }) {
+// --- 主组件 ---
+export default function OrderApp() {
+  const [page, setPage] = useState('list');
+
+  const variants = {
+    initial: { opacity: 0, x: 20 },
+    animate: { opacity: 1, x: 0 },
+    exit: { opacity: 0, x: -20 }
+  };
+
   return (
-    <div className="flex gap-3">
-       <div className="flex flex-col items-center">
-          <div className={`w-3 h-3 rounded-full ${status === 'done' ? 'bg-green-500' : status === 'active' ? 'bg-purple-500' : 'bg-gray-200'}`}></div>
-          {!last && <div className="w-[1px] h-10 bg-gray-100"></div>}
-       </div>
-       <div className="pb-4">
-          <p className={`text-[10px] font-bold ${status === 'done' ? 'text-green-500' : 'text-gray-800'}`}>{title}</p>
-          <p className="text-gray-300 text-[8px] mt-1">{time}</p>
-       </div>
+    <div className="max-w-md mx-auto shadow-2xl min-h-screen overflow-hidden bg-gray-100">
+      <Head><title>定制订单系统</title></Head>
+      
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={page}
+          variants={variants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          transition={{ duration: 0.2 }}
+        >
+          {page === 'list' && <OrderList onDetail={() => setPage('detail')} />}
+          {page === 'detail' && <OrderDetail onBack={() => setPage('list')} onNext={() => setPage('pay')} />}
+          {page === 'pay' && <PaymentPage onBack={() => setPage('detail')} onNext={() => setPage('progress')} />}
+          {page === 'progress' && <ProgressPage onBack={() => setPage('pay')} />}
+        </motion.div>
+      </AnimatePresence>
+
+      <div className="fixed bottom-0 max-w-md w-full bg-white border-t flex justify-around py-3 text-[10px] text-gray-400">
+        <div className="flex flex-col items-center gap-1 text-primary"><div className="w-5 h-5 bg-primary/10 rounded"></div>首页</div>
+        <div className="flex flex-col items-center gap-1"><div className="w-5 h-5 bg-gray-100 rounded"></div>订单</div>
+        <div className="flex flex-col items-center gap-1"><div className="w-5 h-5 bg-gray-100 rounded"></div>我的</div>
+      </div>
     </div>
   );
 }
