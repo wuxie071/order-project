@@ -2,13 +2,14 @@
 module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
+    "./styles/**/*.css",
   ],
   theme: {
     extend: {
       colors: {
-        primary: '#1677FF', // 对应设计稿蓝色
-        warning: '#FA8C16', // 对应待确认状态色
+        primary: '#1677FF',
+        warning: '#FA8C16',
+        success: '#52C41A',
       },
     },
   },
