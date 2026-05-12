@@ -1,4 +1,3 @@
-import 'tailwindcss/tailwind.css';
 import { useState } from "react";
 
 export default function OrderApp() {
