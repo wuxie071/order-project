@@ -3,6 +3,5 @@
 @tailwind utilities;
 
 body {
-  background-color: #F5F7FA; /* 匹配截图背景 */
-  -webkit-tap-highlight-color: transparent;
+  background-color: #F5F7FA;
 }
