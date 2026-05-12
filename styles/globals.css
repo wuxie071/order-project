@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss"; /* 这代替了之前所有的 @tailwind base 指令 */
 
 body {
   background-color: #F5F7FA;
