@@ -7,12 +7,17 @@
     "start": "next start"
   },
   "dependencies": {
+    "next": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "next": "latest",
-    "tailwindcss": "latest",
-    "postcss": "latest",
+    "lucide-react": "latest",
+    "framer-motion": "latest",
+    "clsx": "latest",
+    "tailwind-merge": "latest"
+  },
+  "devDependencies": {
     "autoprefixer": "latest",
-    "lucide-react": "latest"
+    "postcss": "latest",
+    "tailwindcss": "latest"
   }
 }
