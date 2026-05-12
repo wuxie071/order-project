@@ -1,0 +1,15 @@
+{
+  "name": "order-demo",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "react": "canary",
+    "react-dom": "canary",
+    "next": "latest",
+    "lucide-react": "latest"
+  }
+}
